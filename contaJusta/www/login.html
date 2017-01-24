@@ -18,7 +18,9 @@
         ng-minLength="6">
 
         <br>
-        {{ctrlL.mensagem}}
+        <div ng-class="ctrlL.varAlert" ng-show="ctrlL.exibeAlert">
+            {{ctrlL.msg}}
+        </div>
         <center>
             <div class="btn-group">
                 <button type="button" class="btn btn-success " ng-disabled="formLogin.$invalid"ng-click="ctrlL.autenticar()">Acessar</button>

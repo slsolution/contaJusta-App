@@ -24,9 +24,36 @@
 
 	login.controller('ctrlLogin',['$http',function($http){
 		var self = this;
+
 		self.user = {};
-		self.mensagem = "";
 		self.gif = false;
+		// Variável que detem a informação do css do box que exibe as mensagem de falha ou sucesso;
+		self.varAlert = {
+				"alert":true,
+				"alert-success":true,
+				"alert-danger":false
+			};
+		// Exibe o alert ou não;
+		self.exibeAlert = false;
+
+		// Mensagem
+		self.msg = "";
+
+		// troca o css do box que exibe as mensagem de falha ou sucesso;
+
+		funcAlert = function(ref,exibeAlert){
+			self.varAlert = {
+				"alert":true,
+				"alert-success":ref,
+				"alert-danger":!ref
+			};
+			self.exibeAlert = exibeAlert;
+		}
+
+
+		var exibeGif = function(){
+			self.gif = !self.gif;
+		}
 
 		self.autenticar = function(){
 
@@ -39,17 +66,27 @@
 					timeout:10000
 				};
 
-				self.gif = true;
+				exibeGif();
 				$http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request,config)
 				.then(
 					function(response){
-						self.mensagem = response.data;
+						var status  = response.data.status;
+						if (status == "sucesso") {
+							funcAlert(true,true);
+						}else{
+							funcAlert(false,true);
+						}
+						self.msg = response.data.msg;
+						
+
 					},function(errResponse){
 						self.mensagem = "Erro ao se comunicar com o servidor.";
+						funcAlert(false,true);
 					}
 
 					);
-				self.gif = false;
+				exibeGif();
+				
 
 			}
 			
