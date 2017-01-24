@@ -81,6 +81,8 @@
 					var status  = response.data.status;
 					if (status == "sucesso") {
 						funcAlert(true,true);
+
+						setTimeout(function(){ location.href="pages/home.html"; }, 3000);
 					}else{
 						funcAlert(false,true);
 					}
