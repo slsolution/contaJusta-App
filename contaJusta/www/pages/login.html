@@ -28,7 +28,12 @@
                 <button type="button" class="btn btn-info" >Cadastrar</button>
             </div>
             <br>
-            <img src="img/loading.gif" width="100px" ng-show="ctrlL.gif">
+
+            <div ng-show="ctrlL.wait">
+                <br>
+                Por favor espere...
+                <img src="img/loading.gif" class="img-responsive" style="max-width: 150px;">
+            </div>
         </center>
       </form>
     </div>

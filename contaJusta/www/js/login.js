@@ -26,7 +26,7 @@
 		var self = this;
 
 		self.user = {};
-		self.gif = false;
+		self.carregando = "Para prosseguir faça seu login.";
 		// Variável que detem a informação do css do box que exibe as mensagem de falha ou sucesso;
 		self.varAlert = {
 				"alert":true,
@@ -35,6 +35,9 @@
 			};
 		// Exibe o alert ou não;
 		self.exibeAlert = false;
+
+		// Mensagem de waiting..
+		self.wait = false;
 
 		// Mensagem
 		self.msg = "";
@@ -50,15 +53,21 @@
 			self.exibeAlert = exibeAlert;
 		}
 
+		self.autenticar = function(){
+			self.wait = true;
+			if ( self.user.nome.length >=8 && self.user.senha.length >= 6) {
+				// Exibe imagem de "loading"			
 
-		var exibeGif = function(){
-			self.gif = !self.gif;
+				// Fazer requisição;
+				requisitar();				
+				
+				// Retira imagem de "loading"
+
+			}
 		}
 
-		self.autenticar = function(){
-
-			if ( self.user.nome.length >=8 && self.user.senha.length >= 6) {
-				var request = {
+		var requisitar = function(){
+			var request = {
 					usuario: self.user.nome,
 					senha : self.user.senha
 				}
@@ -66,30 +75,28 @@
 					timeout:10000
 				};
 
-				exibeGif();
-				$http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request,config)
-				.then(
-					function(response){
-						var status  = response.data.status;
-						if (status == "sucesso") {
-							funcAlert(true,true);
-						}else{
-							funcAlert(false,true);
-						}
-						self.msg = response.data.msg;
-						
-
-					},function(errResponse){
-						self.mensagem = "Erro ao se comunicar com o servidor.";
+			return $http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request,config)
+			.then(
+				function(response){
+					var status  = response.data.status;
+					if (status == "sucesso") {
+						funcAlert(true,true);
+					}else{
 						funcAlert(false,true);
 					}
+					self.msg = response.data.msg;
+					self.wait = false;
 
-					);
-				exibeGif();
-				
+					
 
-			}
-			
-		}
+				},function(errResponse){
+					self.msg = "Erro ao se comunicar com o servidor.";
+					funcAlert(false,true);
+					self.wait = false;
+
+				}
+
+				);
+			};
 
 	}]);
