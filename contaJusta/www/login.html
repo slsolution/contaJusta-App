@@ -1,0 +1,32 @@
+<section class="row">
+    <div class="col-xs-12">
+      <form action="#" method="post" name="formLogin">
+        <label for="usuario">Usuário</label>
+        <input type="text"
+            name="usuario"
+            class="form-control"
+            ng-model="ctrlL.user.nome"
+            required=""
+            ng-minLength="8"><br>
+
+        <label for="senha">Senha</label>
+        <input type="password"
+        name="senha"
+        class="form-control"
+        required="" 
+        ng-model="ctrlL.user.senha"
+        ng-minLength="6">
+
+        <br>
+
+        <center>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success " ng-disabled="formLogin.$invalid"ng-click="ctrlL.autenticar()">Acessar</button>
+                <button type="button" class="btn btn-inverse"  >Esqueci senha</button>
+                <button type="button" class="btn btn-info" >Cadastrar</button>
+            </div>
+        </center>
+      </form>
+    </div>
+
+</section>
