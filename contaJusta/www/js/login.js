@@ -25,7 +25,7 @@
 	login.controller('ctrlLogin',['$http',function($http){
 		var self = this;
 		self.user = {};
-		self.mensagem = "sem mensagem";
+		self.mensagem = "";
 
 		self.autenticar = function(){
 
@@ -37,9 +37,9 @@
 				$http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request)
 				.then(
 					function(response){
-						console.log(response.data);
+						self.mensagem = response.data;
 					},function(errResponse){
-						console.log("ERRO ao acessar o servidor. :/")
+						self.mensagem = "Erro ao se comunicar com o servidor.";
 					}
 
 					);
