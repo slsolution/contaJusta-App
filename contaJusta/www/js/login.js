@@ -26,6 +26,7 @@
 		var self = this;
 		self.user = {};
 		self.mensagem = "";
+		self.gif = false;
 
 		self.autenticar = function(){
 
@@ -34,7 +35,12 @@
 					usuario: self.user.nome,
 					senha : self.user.senha
 				}
-				$http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request)
+				var config = {
+					timeout:10000
+				};
+
+				self.gif = true;
+				$http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request,config)
 				.then(
 					function(response){
 						self.mensagem = response.data;
@@ -43,6 +49,7 @@
 					}
 
 					);
+				self.gif = false;
 
 			}
 			
