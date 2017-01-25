@@ -3,7 +3,31 @@
   <br>
   <img src="img/cadastro.png" class="img-responsive" style="max-width:100px;">
 </center>
-<form name="formCadastro">
+<div ng-show="ctrlC.cadastrando">
+  <center>
+    <br>
+    Por favor espere...
+    <img src="img/loading.gif" class="img-responsive" style="max-width: 150px;">
+  </center>
+</div>
+
+<div ng-class="ctrlC.varAlert" ng-show="ctrlC.exibeAlert">
+    {{ctrlC.msg}}
+</div>
+<form name="formCadastro" ng-submit="ctrlC.cadastrar()">
+
+  <label for="usuario">
+  Nome
+  </label>
+  <input type="text"
+  class="form-control"
+  required=""
+  placeholder="Digite seu nome"
+  ng-model="ctrlC.dados.nome"
+  maxlength="100"
+  name="usuario">
+  <br>
+
   <label for="usuario">
   Usuário
   </label>
@@ -14,7 +38,8 @@
   ng-model="ctrlC.dados.usuario"
   ng-minLength="8"
   maxlength="15"
-  ng-change="ctrlC.existeUsuario()">
+  ng-change="ctrlC.existeUsuario()"
+  name="usuario">
   <br>
   <span ng-show="ctrlC.wait">
     <center>
@@ -23,16 +48,27 @@
       <br>
     </center>
   </span>
-   <span ng-show="!formCadastro.$pristine && ctrlC.usuarioValido">
-      <img src="img/valido.png" width="30px">
-      <strong style="color:green;">Nome de usuário disponível.</strong><br> 
-      <br>    
+   <span ng-show="!formCadastro.$pristine && ctrlC.usuarioValido && !formCadastro.usuario.$invalid">
+      <center>
+        <img src="img/valido.png" width="30px">
+        <strong style="color:green;">Nome de usuário disponível.</strong><br> 
+        <br>  
+      </center>  
   </span>
 
-   <span ng-show="!formCadastro.$pristine && !ctrlC.usuarioValido">
-      <img src="img/invalido.png" width="30px">
-      <strong style="color:red;">Nome de usuário indisponível.</strong><br> 
-      <br>    
+   <span ng-show="!formCadastro.$pristine && !ctrlC.usuarioValido && !formCadastro.usuario.$invalid">
+     <center>
+        <img src="img/invalido.png" width="30px">
+        <strong style="color:red;">Nome de usuário indisponível.</strong><br> 
+        <br>
+      </center>    
+  </span>
+
+  <span ng-show="formCadastro.usuario.$invalid && !formCadastro.$pristine">
+    <center>
+      <strong style="color:red;">Preencha o campo usuário adequadamente.  </strong><br> 
+      <br>
+    </center>    
   </span>
 
 
@@ -46,10 +82,19 @@
   placeholder="Digite uma senha"
   ng-model="ctrlC.dados.senha"
   ng-minLength="6"
-  maxlength="10">
+  maxlength="10"
+  name="senha">
   <br>
+  <span ng-show="formCadastro.senha.$error.minlength && !formCadastro.$pristine">
+    <center>
+      <img src="img/invalido.png" width="30px">
+      <strong style="color:red;">A senha deve ter no mínio 6 caracteres.</strong><br> 
+      <br>
+    </center>    
+  </span>
+
   <label for="usuario">
-  Digite senha novamente:
+  Repita sua senha:
   </label>
   <input type="password"
   class="form-control"
@@ -58,8 +103,25 @@
   ng-model="ctrlC.dados.rSenha"
   ng-minLength="6"
   maxlength="10"
-  >  
+  >
   <br>
+   <span ng-show="ctrlC.dados.senha != ctrlC.dados.rSenha">
+    <center>
+      <img src="img/invalido.png" width="30px">
+      <strong style="color:red;">Repita sua senha corretamente.</strong><br> 
+      <br>
+    </center>    
+  </span>
+
+  <span ng-show="ctrlC.dados.senha == ctrlC.dados.rSenha && 
+  !ctrlC.undefined(ctrlC.dados.rSenha) ">
+    <center>
+      <img src="img/valido.png" width="30px">
+      <strong style="color:green;">Senhas validadas.</strong><br> 
+      <br>
+    </center>    
+  </span>
+
   <label for="Email">
   Digite seu email:
   </label>
@@ -69,7 +131,14 @@
   placeholder="Digite seu email"
   ng-model="ctrlC.dados.email">
   <br>
-  <input type="submit" value="Cadastrar" class="btn btn-block">
+
+  <input type="submit"
+  value="Cadastrar"
+  class="btn btn-block"
+  ng-disabled="!ctrlC.usuarioValido && (ctrlC.dados.senha == ctrlC.dados.rSenha) && formCadastro.$invalid"
+  >
+
+
 
 
   
