@@ -10,6 +10,11 @@
 		.when('/dev',{
 			templateUrl : 'pages/desenvolvedores.html'
 		})
+		.when('/cadastro',{
+			templateUrl : 'pages/cadastro.html',
+			controller:'ctrlCadastro',
+			controllerAs: 'ctrlC'
+		})
 		.otherwise({
 			redirectTo:'/'
 		});

@@ -1,0 +1,76 @@
+<center>
+  <br>
+  <br>
+  <img src="img/cadastro.png" class="img-responsive" style="max-width:100px;">
+</center>
+<form name="formCadastro">
+  <label for="usuario">
+  Usuário
+  </label>
+  <input type="text"
+  class="form-control"
+  required=""
+  placeholder="Digite um usuário"
+  ng-model="ctrlC.dados.usuario"
+  ng-minLength="8"
+  maxlength="15"
+  ng-change="ctrlC.existeUsuario()">
+  <br>
+  <span ng-show="ctrlC.wait">
+    <center>
+      <strong>Verificando se usuário já existe.</strong><br> 
+      <img src="img/loading.gif" class="img-responsive" style="max-width: 80px;"> 
+      <br>
+    </center>
+  </span>
+   <span ng-show="!formCadastro.$pristine && ctrlC.usuarioValido">
+      <img src="img/valido.png" width="30px">
+      <strong style="color:green;">Nome de usuário disponível.</strong><br> 
+      <br>    
+  </span>
+
+   <span ng-show="!formCadastro.$pristine && !ctrlC.usuarioValido">
+      <img src="img/invalido.png" width="30px">
+      <strong style="color:red;">Nome de usuário indisponível.</strong><br> 
+      <br>    
+  </span>
+
+
+
+  <label for="Senha">
+  Senha
+  </label>
+  <input type="password"
+  class="form-control"
+  required=""
+  placeholder="Digite uma senha"
+  ng-model="ctrlC.dados.senha"
+  ng-minLength="6"
+  maxlength="10">
+  <br>
+  <label for="usuario">
+  Digite senha novamente:
+  </label>
+  <input type="password"
+  class="form-control"
+  required=""
+  placeholder="Repita o passo anterior."
+  ng-model="ctrlC.dados.rSenha"
+  ng-minLength="6"
+  maxlength="10"
+  >  
+  <br>
+  <label for="Email">
+  Digite seu email:
+  </label>
+  <input type="email"
+  class="form-control"
+  required=""
+  placeholder="Digite seu email"
+  ng-model="ctrlC.dados.email">
+  <br>
+  <input type="submit" value="Cadastrar" class="btn btn-block">
+
+
+  
+</form>

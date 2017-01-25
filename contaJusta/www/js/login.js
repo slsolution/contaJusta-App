@@ -33,6 +33,10 @@
 				"alert-success":true,
 				"alert-danger":false
 			};
+
+		self.redirect = function(url){
+			location.href=url;
+		};
 		// Exibe o alert ou não;
 		self.exibeAlert = false;
 
@@ -75,7 +79,7 @@
 					timeout:10000
 				};
 
-			return $http.post("http://192.168.1.9:8000/contaJusta-App/backend/login.php",request,config)
+			return $http.post("http://servicos.slsolution.com.br/contaJusta/login.php",request,config)
 			.then(
 				function(response){
 					var status  = response.data.status;
